@@ -12,7 +12,7 @@ namespace ManagerEasySendgrid.Injection
     public static class ManagerEasySendgridExtension
     {
         /// <summary>
-        /// Agrega la injeccion de dependencias
+        /// Agrega la configuracion de la injeccion de dependencias
         /// </summary>
         /// <param name="services"></param>
         public static void AddManegerManagerEasySendgrid(this IServiceCollection services, SendGridProviderConfiguration sendGridProviderConfiguration )
