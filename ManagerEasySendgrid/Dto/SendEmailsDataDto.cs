@@ -9,15 +9,22 @@ namespace ManagerEasySendgrid.Dto
     public class SendEmailsDataDto
     {
         /// <summary>
-        /// Listado de emails 
+        /// 
+        /// </summary>
+        public SendEmailsDataDto()
+        {
+            EmailsToSend = new List<string>();
+        }
+        /// <summary>
+        /// Requerido: Listado de emails 
         /// </summary>
         public List<string> EmailsToSend { get; set; }
         /// <summary>
-        /// Identificador del template de sendgrid
+        /// Requerido: Identificador del template de sendgrid
         /// </summary>
         public string TemplateId { get; set; }
         /// <summary>
-        /// Objeto configurado para la template
+        /// Opcional: Objeto configurado para la template
         /// </summary>
         public object Data { get; set; }
     }

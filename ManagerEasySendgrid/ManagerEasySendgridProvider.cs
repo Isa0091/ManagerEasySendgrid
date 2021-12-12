@@ -28,17 +28,29 @@ namespace ManagerEasySendgrid
 
         public async Task SendEmails(SendEmailsDataDto sendEmailsDataDto)
         {
+            if (sendEmailsDataDto.EmailsToSend == null || sendEmailsDataDto.EmailsToSend.Any() == false)
+                throw new ArgumentException("Debe enviar los emails");
+
+            if (string.IsNullOrEmpty(sendEmailsDataDto.TemplateId))
+                throw new ArgumentException("Debe enviar un templateId");
+
             List<Personalization> listPersonalization = new List<Personalization>();
             SendGridClient sendGridClient = new SendGridClient(_sendGridProviderConfiguration.ApiKey);
 
             foreach (string email in sendEmailsDataDto.EmailsToSend)
             {
                 EmailAddress to = new EmailAddress(email);
-                listPersonalization.Add(new Personalization()
-                {
-                    Tos = new List<EmailAddress> { to },
-                    TemplateData = sendEmailsDataDto.Data
-                });
+                Personalization personalization =
+                    new Personalization()
+                    {
+                        Tos = new List<EmailAddress> { to },
+                        TemplateData = sendEmailsDataDto.Data
+                    };
+
+                if (sendEmailsDataDto.Data != null)
+                    personalization.TemplateData = sendEmailsDataDto.Data;
+
+                listPersonalization.Add(personalization);
             }
 
             EmailAddress from = new EmailAddress(_sendGridProviderConfiguration.SourceEmail, _sendGridProviderConfiguration.SourceName);
@@ -62,11 +74,16 @@ namespace ManagerEasySendgrid
 
         public async Task SendEmail(SendEmailDataDto sendEmailDataDto)
         {
+
+            if (string.IsNullOrEmpty(sendEmailDataDto.EmailToSend))
+                throw new ArgumentException("Debe enviar un email a enviar");
+
+
             await SendEmails(new SendEmailsDataDto()
             {
-                 TemplateId= sendEmailDataDto.TemplateId,
-                 Data= sendEmailDataDto.Data,
-                 EmailsToSend= new List<string> { sendEmailDataDto.EmailToSend }
+                TemplateId = sendEmailDataDto.TemplateId,
+                Data = sendEmailDataDto.Data,
+                EmailsToSend = new List<string> { sendEmailDataDto.EmailToSend }
             });
         }
     }
