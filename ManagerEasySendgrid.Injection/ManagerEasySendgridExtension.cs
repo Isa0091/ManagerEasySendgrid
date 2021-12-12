@@ -15,7 +15,7 @@ namespace ManagerEasySendgrid.Injection
         /// Agrega la injeccion de dependencias
         /// </summary>
         /// <param name="services"></param>
-        public static void AddManegerFileEasyAzure(this IServiceCollection services, SendGridProviderConfiguration sendGridProviderConfiguration )
+        public static void AddManegerManagerEasySendgrid(this IServiceCollection services, SendGridProviderConfiguration sendGridProviderConfiguration )
         {
             services.AddScoped<IManagerEasySendgridProvider>(x => new ManagerEasySendgridProvider(sendGridProviderConfiguration));
         }
