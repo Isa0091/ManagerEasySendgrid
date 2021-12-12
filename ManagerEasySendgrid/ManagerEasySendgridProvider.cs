@@ -74,10 +74,8 @@ namespace ManagerEasySendgrid
 
         public async Task SendEmail(SendEmailDataDto sendEmailDataDto)
         {
-
             if (string.IsNullOrEmpty(sendEmailDataDto.EmailToSend))
                 throw new ArgumentException("Debe enviar un email a enviar");
-
 
             await SendEmails(new SendEmailsDataDto()
             {
